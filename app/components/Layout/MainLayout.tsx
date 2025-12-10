@@ -16,7 +16,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
       <Layout style={{ marginLeft: 250 }}>
-        <Header />
+  
         <Content
           style={{
             margin: '24px 16px',

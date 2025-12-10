@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ConfigProvider } from "antd";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,12 +23,27 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} antialiased`}
+        style={{ fontFamily: 'var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
       >
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: '#1890ff',
+              colorPrimary: '#667eea',
+              colorSuccess: '#38ef7d',
+              colorWarning: '#f5576c',
+              colorError: '#eb3349',
+              colorInfo: '#4facfe',
+              borderRadius: 8,
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            },
+            components: {
+              Button: {
+                primaryShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+              },
+              Card: {
+                borderRadiusLG: 16,
+              },
             },
           }}
         >
