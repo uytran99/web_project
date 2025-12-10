@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IoT Heart Rate Admin Dashboard
 
-## Getting Started
+Web Admin Dashboard để quản trị hệ thống IoT đo nhịp tim, được xây dựng với Next.js, Ant Design, và TypeScript.
 
-First, run the development server:
+## Tính năng
+
+- 📊 **Dashboard Tổng quan**: Metrics, biểu đồ nhịp tim, và hoạt động gần đây
+- 📱 **Quản lý Thiết bị IoT**: CRUD operations cho thiết bị
+- ❤️ **Dữ liệu Nhịp tim**: Xem, lọc, tìm kiếm và export dữ liệu nhịp tim
+- 📈 **Biểu đồ**: Visualize dữ liệu nhịp tim theo thời gian
+- 🔍 **Filtering & Search**: Lọc theo thiết bị, thời gian, khoảng nhịp tim
+- 📤 **Export**: Export dữ liệu ra JSON hoặc CSV
+
+## Cài đặt
+
+1. Clone repository và cài đặt dependencies:
+
+```bash
+npm install
+```
+
+2. Tạo file `.env.local` và cấu hình API URL:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+```
+
+3. Chạy development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Mở [http://localhost:3000](http://localhost:3000) trong browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cấu trúc dự án
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  ├── components/
+  │   ├── Layout/          # Sidebar, Header, MainLayout
+  │   ├── Charts/          # HeartRateChart component
+  │   ├── Cards/           # MetricCard component
+  │   └── Forms/           # DeviceForm component
+  ├── dashboard/           # Dashboard page
+  ├── devices/             # Devices management page
+  ├── heart-rate/          # Heart rate data page
+  ├── users/               # Users page (placeholder)
+  └── settings/            # Settings page
 
-## Learn More
+lib/
+  ├── api/                 # API client và service functions
+  ├── types/               # TypeScript types/interfaces
+  ├── utils/               # Utility functions
+  └── config.ts            # App configuration
+```
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Dashboard kỳ vọng backend API có các endpoints sau:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `GET /api/dashboard/stats` - Thống kê tổng quan
+- `GET /api/devices` - Lấy danh sách thiết bị
+- `GET /api/devices/:id` - Chi tiết thiết bị
+- `POST /api/devices` - Tạo thiết bị mới
+- `PUT /api/devices/:id` - Cập nhật thiết bị
+- `DELETE /api/devices/:id` - Xóa thiết bị
+- `GET /api/heart-rate` - Lấy dữ liệu nhịp tim (với query params)
+- `GET /api/heart-rate/:id` - Chi tiết một record
+- `DELETE /api/heart-rate/:id` - Xóa dữ liệu
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js 16** - React framework
+- **Ant Design 6** - UI component library
+- **TypeScript** - Type safety
+- **Axios** - HTTP client
+- **@ant-design/charts** - Chart library
+- **dayjs** - Date manipulation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Build
+
+```bash
+npm run build
+npm start
+```
