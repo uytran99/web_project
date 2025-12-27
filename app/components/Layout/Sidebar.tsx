@@ -1,6 +1,6 @@
 'use client';
 
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   DashboardOutlined,
@@ -8,7 +8,9 @@ import {
   MobileOutlined,
   UserOutlined,
   SettingOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
+import { useAuth } from '@/lib/contexts/AuthContext';
 
 const { Sider } = Layout;
 
@@ -43,6 +45,7 @@ const menuItems = [
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
+  const { logout, user } = useAuth();
 
   const handleMenuClick = ({ key }: { key: string }) => {
     router.push(key);
@@ -60,6 +63,8 @@ export default function Sidebar() {
         bottom: 0,
         background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)',
         boxShadow: '4px 0 24px rgba(102, 126, 234, 0.2)',
+        display: 'flex',
+        flexDirection: 'column',
       }}
       theme="dark"
     >
@@ -110,10 +115,68 @@ export default function Sidebar() {
           marginTop: '16px',
           background: 'transparent',
           fontSize: '15px',
-          fontWeight: '500'
+          fontWeight: '500',
+          flex: 1,
         }}
         theme="dark"
       />
+      
+      {/* Logout Section */}
+      <div style={{
+        padding: '16px',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'rgba(0, 0, 0, 0.1)',
+      }}>
+        {user && (
+          <div style={{
+            marginBottom: '12px',
+            padding: '8px 12px',
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '8px',
+            textAlign: 'center',
+          }}>
+            <p style={{
+              margin: 0,
+              fontSize: '12px',
+              color: 'rgba(255, 255, 255, 0.6)',
+            }}>Đăng nhập với</p>
+            <p style={{
+              margin: '4px 0 0 0',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: 'white',
+            }}>{user.name || user.username}</p>
+          </div>
+        )}
+        <Button
+          type="default"
+          icon={<LogoutOutlined />}
+          onClick={logout}
+          block
+          style={{
+            height: '44px',
+            borderRadius: '10px',
+            background: 'rgba(255, 255, 255, 0.15)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            color: 'white',
+            fontWeight: '600',
+            fontSize: '15px',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          Đăng xuất
+        </Button>
+      </div>
       
       <style jsx global>{`
         .ant-menu-dark.ant-menu-inline .ant-menu-item {
