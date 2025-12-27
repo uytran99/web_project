@@ -47,11 +47,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (credentials: LoginCredentials) => {
     const response = await authApi.login(credentials);
     
+    // Build user object from response
+    const user: AuthUser = {
+      _id: response.userId,
+      userId: response.userId,
+      username: response.username,
+      email: response.email,
+      name: response.username, // Use username as display name
+    };
+    
     // Save token and user info
     localStorage.setItem(AUTH_TOKEN_KEY, response.token);
-    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(response.user));
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
     
-    setUser(response.user);
+    setUser(user);
     router.push('/dashboard');
   };
 

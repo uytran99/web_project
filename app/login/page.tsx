@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Input, Button, Alert, Typography, Spin } from "antd";
-import { UserOutlined, LockOutlined, HeartFilled, LoadingOutlined } from "@ant-design/icons";
+import { MailOutlined, LockOutlined, HeartFilled, LoadingOutlined } from "@ant-design/icons";
 import { useAuth } from "@/lib/contexts/AuthContext";
 
 const { Title, Text } = Typography;
@@ -21,7 +21,7 @@ export default function LoginPage() {
         }
     }, [isAuthenticated, isLoading, router]);
 
-    const handleSubmit = async (values: { username: string; password: string }) => {
+    const handleSubmit = async (values: { email: string; password: string }) => {
         try {
             setLoading(true);
             setError(null);
@@ -173,12 +173,16 @@ export default function LoginPage() {
                     requiredMark={false}
                 >
                     <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
+                        name="email"
+                        rules={[
+                            { required: true, message: 'Vui lòng nhập email!' },
+                            { type: 'email', message: 'Email không hợp lệ!' }
+                        ]}
                     >
                         <Input
-                            prefix={<UserOutlined style={{ color: '#667eea' }} />}
-                            placeholder="Tên đăng nhập"
+                            prefix={<MailOutlined style={{ color: '#667eea' }} />}
+                            placeholder="Email"
+                            type="email"
                             style={{
                                 height: '56px',
                                 borderRadius: '14px',

@@ -145,7 +145,7 @@ export default function Sidebar() {
               fontSize: '14px',
               fontWeight: '600',
               color: 'white',
-            }}>{user.name || user.username}</p>
+            }}>{user.name || user.email}</p>
           </div>
         )}
         <Button
