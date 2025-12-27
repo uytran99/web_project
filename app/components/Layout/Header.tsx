@@ -3,24 +3,33 @@
 import { Layout, Avatar, Dropdown, Space, Badge } from "antd";
 import { UserOutlined, LogoutOutlined, BellOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { useAuth } from "@/lib/contexts/AuthContext";
 
 const { Header: AntHeader } = Layout;
 
-const userMenuItems: MenuProps["items"] = [
-    {
-        key: "profile",
-        icon: <UserOutlined />,
-        label: "Profile",
-    },
-    {
-        key: "logout",
-        icon: <LogoutOutlined />,
-        label: "Logout",
-        danger: true,
-    },
-];
-
 export default function Header() {
+    const { user, logout } = useAuth();
+
+    const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
+        if (key === "logout") {
+            logout();
+        }
+    };
+
+    const userMenuItems: MenuProps["items"] = [
+        {
+            key: "profile",
+            icon: <UserOutlined />,
+            label: "Profile",
+        },
+        {
+            key: "logout",
+            icon: <LogoutOutlined />,
+            label: "Đăng xuất",
+            danger: true,
+        },
+    ];
+
     return (
         <AntHeader
             className="glass animate-fade-in"
@@ -65,7 +74,7 @@ export default function Header() {
                         }} />
                     </div>
                 </Badge>
-                <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+                <Dropdown menu={{ items: userMenuItems, onClick: handleMenuClick }} placement="bottomRight">
                     <Space style={{ 
                         cursor: "pointer",
                         padding: '8px 16px',
@@ -95,10 +104,11 @@ export default function Header() {
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text',
-                        }}>Admin</span>
+                        }}>{user?.name || 'Admin'}</span>
                     </Space>
                 </Dropdown>
             </Space>
         </AntHeader>
     );
 }
+
